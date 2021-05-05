@@ -50,7 +50,6 @@ tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
     git config user.name "$GITHUB_ACTOR"
     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
     git pull "$GIT_REPOSITORY_URL"
-    git checkout gh-pages
 ) || exit 1
 
 debug "Enumerating contents of $1"
@@ -61,7 +60,7 @@ debug "Committing and pushing changes"
     cd "$tmp_dir" || exit 1
     git add .
     git commit -m "$GH_PAGES_COMMIT_MESSAGE"
-    git push --set-upstream "$GIT_REPOSITORY_URL" master
+    git push --set-upstream "$GIT_REPOSITORY_URL" gh-pages
 ) || exit 1
 
 rm -rf "$tmp_dir"
