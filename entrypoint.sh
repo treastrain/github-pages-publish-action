@@ -42,15 +42,15 @@ fi
 
 GIT_REPOSITORY_URL="https://${GH_PERSONAL_ACCESS_TOKEN}@${GITHUB_SERVER_URL#https://}/$GITHUB_REPOSITORY.git"
 
-# debug "Checking out gh-pages repository"
-# tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
-# (
+debug "Checking out gh-pages repository"
+tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
+(
 #     cd "$tmp_dir" || exit 1
 #     git init
 #     git config user.name "$GITHUB_ACTOR"
 #     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 #     git pull "$GIT_REPOSITORY_URL" gh-pages
-# ) || exit 1
+) || exit 1
 
 debug "Enumerating contents of $1"
 cp -r "$1" "$tmp_dir"
