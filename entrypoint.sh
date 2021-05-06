@@ -46,20 +46,22 @@ debug "Checking out gh-pages repository"
 tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
 (
     cd "$tmp_dir" || exit 1
-    git init
+    git clone -b gh-pages "$GIT_REPOSITORY_URL" .
     git config user.name "$GITHUB_ACTOR"
     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-    git pull "$GIT_REPOSITORY_URL" gh-pages
 ) || exit 1
 
 debug "Enumerating contents of $1"
-# cp -r "$1" "$tmp_dir"
+for file in $(find $1 -maxdepth 1 -type f -name '*' -execdir basename '{}' ';'); do
+    debug "Copying $file"
+    cp "$1/$file" "$tmp_dir"
+done
 
 debug "Committing and pushing changes"
 (
     cd "$tmp_dir" || exit 1
     git add .
-    git commit -m "$GH_PAGES_COMMIT_MESSAGE"
+    git commit -m "$WIKI_COMMIT_MESSAGE"
     git push --set-upstream "$GIT_REPOSITORY_URL" gh-pages
 ) || exit 1
 
