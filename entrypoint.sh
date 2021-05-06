@@ -52,10 +52,9 @@ tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
 ) || exit 1
 
 debug "Enumerating contents of $1"
-for file in $(find $1 -maxdepth 1 -type f -name '*' -execdir basename '{}' ';'); do
-    debug "Copying $file"
-    cp "$1/$file" "$tmp_dir"
-done
+(
+    cp -R "$1/" "$tmp_dir"
+) || exit 1
 
 debug "Committing and pushing changes"
 (
