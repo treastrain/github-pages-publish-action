@@ -61,7 +61,7 @@ debug "Committing and pushing changes"
 (
     cd "$tmp_dir" || exit 1
     git add .
-    git commit -m "$WIKI_COMMIT_MESSAGE"
+    git commit -m "$GH_PAGES_COMMIT_MESSAGE"
     git push --set-upstream "$GIT_REPOSITORY_URL" gh-pages
 ) || exit 1
 
