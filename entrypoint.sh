@@ -18,11 +18,6 @@ function add_mask() {
     echo "::add-mask::$1"
 }
 
-if [ -z "$GITHUB_ACTOR" ]; then
-    error "GITHUB_ACTOR environment variable is not set"
-    exit 1
-fi
-
 if [ -z "$GITHUB_REPOSITORY" ]; then
     error "GITHUB_REPOSITORY environment variable is not set"
     exit 1
@@ -47,8 +42,8 @@ tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
 (
     cd "$tmp_dir" || exit 1
     git clone -b gh-pages "$GIT_REPOSITORY_URL" .
-    git config user.name "$GITHUB_ACTOR"
-    git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+    git config user.name "github-actions[bot]"
+    git config user.email "github-actions[bot]@users.noreply.github.com"
 ) || exit 1
 
 debug "Enumerating contents of $1"
